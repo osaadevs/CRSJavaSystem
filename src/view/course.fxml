@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="476.0" prefWidth="626.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CourseController">
    <children>
       <Label fx:id="lblHeading" alignment="CENTER" contentDisplay="CENTER" layoutX="193.0" layoutY="26.0" text="Course Registration">
@@ -27,6 +26,11 @@
       <Label fx:id="lblCourseTitle1" alignment="CENTER" contentDisplay="CENTER" layoutX="32.0" layoutY="141.0" text="Available Courses">
          <font>
             <Font name="Poppins Medium" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblMessage" layoutX="188.0" layoutY="137.0" prefHeight="17.0" prefWidth="410.0" textFill="#f40000">
+         <font>
+            <Font name="Poppins Medium" size="14.0" />
          </font>
       </Label>
    </children>

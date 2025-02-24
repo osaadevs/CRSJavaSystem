@@ -32,6 +32,9 @@ public class CourseController {
     private Label lblHeading;
 
     @FXML
+    private Label lblMessage;
+
+    @FXML
     private TextField txtCourseTitle;
     
     private CourseRegistrationService courseRegistrationService;
@@ -48,13 +51,23 @@ public class CourseController {
 
     @FXML
     private void handleSearchButtonAction(ActionEvent event) {
-        CourseDto selectedCourse = CourseListView.getSelectionModel().getSelectedItem();
-        if (selectedCourse != null) {
-            String result = courseRegistrationService.registerForCourse(selectedCourse, "1234", completedCourses);
-            lblCourseTitle.setText(result);
-
-        }else {
-            lblCourseTitle.setText("Please select a course to register");
+        String query = txtCourseTitle.getText();
+        if (query == null || query.trim().isEmpty()) {
+            lblMessage.setText("Please enter a course title to search");
+            return;
+        }
+        try {
+            ArrayList<CourseDto> courses = courseRegistrationService.searchCourses(query);
+            CourseListView.getItems().clear();
+            if(courses.isEmpty()){
+                lblMessage.setText("No courses found");
+            }else{
+                CourseListView.getItems().addAll(courses);
+                lblMessage.setText(courses.size() + " courses found");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            lblMessage.setText("Error occured while searching for courses");
         }
     }
 

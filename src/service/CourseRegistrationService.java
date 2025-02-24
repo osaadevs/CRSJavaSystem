@@ -5,14 +5,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dao.CourseDAO;
+import dao.EnrollmentDAO;
 import dto.CourseDto;
 
 public class CourseRegistrationService {
-    private ArrayList<CourseDto> availableCourses;
     private CourseDAO courseDAO;
+    private EnrollmentDAO enrollmentDAO;
 
     public CourseRegistrationService() {
        courseDAO = new CourseDAO();
+       enrollmentDAO = new EnrollmentDAO();
     }
 
     public ArrayList<CourseDto> getAllCourses() throws ClassNotFoundException, SQLException {
@@ -23,9 +25,19 @@ public class CourseRegistrationService {
         return courseDAO.searchCourses(title);
     }
 
-    public String registerForCourse (CourseDto course , String studentId, ArrayList<String> completedCourses){
-        //test if the student has completed the prerequisites
+    public String registerForCourse (CourseDto course , int studentId, ArrayList<String> completedCourses){
+        try{
+            boolean success = enrollmentDAO.registerStudent(studentId,course.getcourseId());
+            if(success){
+                return "Successfully registered for " + course.getCourseTitle();
+            }else{
+                return "Failed to register for " + course.getCourseTitle();
+            }
+        
+        }catch (ClassNotFoundException | SQLException e){
+            e.printStackTrace();
+            return "Error occured during Registration";
 
-        return "Successfully registered for " + course.getCourseTitle(); 
+        }
     }
 }

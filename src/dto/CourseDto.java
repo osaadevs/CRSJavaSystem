@@ -79,12 +79,12 @@ public class CourseDto {
         this.facId = facId;
     }
 
+    
+
     @Override
     public String toString() {
-        return "CourseDto [courseId=" + courseId + ", courseCode=" + courseCode + ", courseTitle=" + courseTitle
-                + ", creditHours=" + creditHours + ", department=" + department + ", maxEnrollment=" + maxEnrollment
-                + ", facId=" + facId + "]";
-    } 
+        return courseCode + " - " + courseTitle + " (" + creditHours + " Credits)";
+    }
 
 }
 
