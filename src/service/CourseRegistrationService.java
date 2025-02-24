@@ -5,16 +5,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dao.CourseDAO;
+import dao.CoursePrerequisiteDAO;
 import dao.EnrollmentDAO;
 import dto.CourseDto;
 
 public class CourseRegistrationService {
     private CourseDAO courseDAO;
     private EnrollmentDAO enrollmentDAO;
+    private CoursePrerequisiteDAO prerequisiteDAO;
 
     public CourseRegistrationService() {
        courseDAO = new CourseDAO();
        enrollmentDAO = new EnrollmentDAO();
+       prerequisiteDAO= new CoursePrerequisiteDAO();
     }
 
     public ArrayList<CourseDto> getAllCourses() throws ClassNotFoundException, SQLException {
@@ -27,6 +30,11 @@ public class CourseRegistrationService {
 
     public String registerForCourse (CourseDto course , int studentId, ArrayList<String> completedCourses){
         try{
+
+            boolean hasPrerequisites = prerequisiteDAO.completedPrerequisites(studentId, course.getcourseId());
+            if (!hasPrerequisites) {
+                return "You need to complete prerequisites before registering for this course.";
+            }
             boolean success = enrollmentDAO.registerStudent(studentId,course.getcourseId());
             if(success){
                 return "Successfully registered for " + course.getCourseTitle();

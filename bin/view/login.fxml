@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController" >
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
       <Label contentDisplay="CENTER" layoutX="238.0" layoutY="48.0" text="User Login">
          <font>
@@ -32,5 +31,6 @@
             <Font name="Poppins SemiBold" size="14.0" />
          </font>
       </Button>
+      <Label fx:id="lblMessage" layoutX="217.0" layoutY="217.0" prefHeight="17.0" prefWidth="303.0" textFill="RED" />
    </children>
 </Pane>
