@@ -21,7 +21,7 @@
          </font>
       </Label>
       <Button fx:id="btnSearch" layoutX="481.0" layoutY="91.0" mnemonicParsing="false" onAction="#handleSearchButtonAction" prefHeight="35.0" prefWidth="117.0" text="Search" />
-      <ListView fx:id="CourseListView" layoutX="28.0" layoutY="164.0" prefHeight="236.0" prefWidth="571.0" />
+      <ListView fx:id="CourseListView" layoutX="28.0" layoutY="164.0" onMouseClicked="#listViewMouseClick" prefHeight="236.0" prefWidth="571.0" />
       <Button fx:id="btnRegister" layoutX="482.0" layoutY="417.0" mnemonicParsing="false" onAction="#handleRegisterButtonAction" prefHeight="35.0" prefWidth="117.0" text="Register" />
       <Label fx:id="lblCourseTitle1" alignment="CENTER" contentDisplay="CENTER" layoutX="32.0" layoutY="141.0" text="Available Courses">
          <font>

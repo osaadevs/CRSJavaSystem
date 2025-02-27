@@ -70,6 +70,8 @@ public class CourseDAO {
                 CourseDto course = new CourseDto(courseId, courseCode, courseTitle, creditHours, department, maxEnrollment, facId);
                 courses.add(course);
             }
+            
+            
             rs.close();
             statement.close();
         } catch (ClassNotFoundException | SQLException e) {
@@ -77,6 +79,57 @@ public class CourseDAO {
         }
         
         return courses;
+    }
+    public void addCourse(String courseTitle, String courseCode, int creditHours, String department, int maxEnrollment, int facultyId) {
+        String query = "INSERT INTO Courses (course_title, course_code, credit_hours, department, max_enrollment, faculty_id) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, courseTitle);
+            statement.setString(2, courseCode);
+            statement.setInt(3, creditHours);
+            statement.setString(4, department);
+            statement.setInt(5, maxEnrollment);
+            statement.setInt(6, facultyId);
+
+            statement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void updateCourse(int courseId, String courseTitle, String courseCode, int creditHours, String department, int maxEnrollment, int facultyId) {
+        String query = "UPDATE Courses SET course_title = ?, course_code = ?, credit_hours = ?, department = ?, max_enrollment = ?, faculty_id = ? WHERE course_id = ?";
+
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, courseTitle);
+            statement.setString(2, courseCode);
+            statement.setInt(3, creditHours);
+            statement.setString(4, department);
+            statement.setInt(5, maxEnrollment);
+            statement.setInt(6, facultyId);
+            statement.setInt(7, courseId);
+
+            statement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteCourse(int courseId) {
+        String query = "DELETE FROM Courses WHERE course_id = ?";
+
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, courseId);
+            statement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     

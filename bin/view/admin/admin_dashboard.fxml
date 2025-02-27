@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminDashboardController">
+   <children>
+      <Label fx:id="lblAdminDashboard" layoutX="38.0" layoutY="23.0" text="Admin Dashboard">
+         <font>
+            <Font name="Poppins SemiBold" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblManageCourses" layoutX="82.0" layoutY="102.0" text="Manage Courses">
+         <font>
+            <Font name="Poppins Medium" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnManageCourses" layoutX="82.0" layoutY="144.0" mnemonicParsing="false" onAction="#handleManageCourses" prefHeight="42.0" prefWidth="124.0" text="Manage Courses" />
+      <Button fx:id="btnManageStudents" layoutX="82.0" layoutY="257.0" mnemonicParsing="false" onAction="#handleManageStudents" prefHeight="42.0" prefWidth="124.0" text="Manage Students" />
+      <Button fx:id="btnEnrollmentRebtport" layoutX="343.0" layoutY="257.0" mnemonicParsing="false" onAction="#handleReporting" prefHeight="42.0" prefWidth="124.0" text="Reporting" />
+      <Label fx:id="lblManageStudents" layoutX="82.0" layoutY="215.0" text="Manage Students">
+         <font>
+            <Font name="Poppins Medium" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblViewReport" layoutX="343.0" layoutY="215.0" text="View Report">
+         <font>
+            <Font name="Poppins Medium" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnEnrollment" layoutX="343.0" layoutY="144.0" mnemonicParsing="false" onAction="#handleEnrollment" prefHeight="42.0" prefWidth="124.0" text="Enrollment " />
+      <Label fx:id="lblViewReport1" layoutX="343.0" layoutY="102.0" text="Manage Enrollment">
+         <font>
+            <Font name="Poppins Medium" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblAdminName" layoutX="467.0" layoutY="32.0" text="Admin Name :" />
+   </children>
+</Pane>

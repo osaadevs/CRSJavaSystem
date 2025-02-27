@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import service.CourseRegistrationService;
 
 public class CourseController {
@@ -36,32 +37,70 @@ public class CourseController {
 
     @FXML
     private TextField txtCourseTitle;
-    
+
     private CourseRegistrationService courseRegistrationService;
-    private ArrayList<String> completedCourses;
 
     public CourseController() {
         courseRegistrationService = new CourseRegistrationService();
-        completedCourses = new ArrayList<>();
+
     }
+
+    @FXML
+    private void initialize() {
+        btnRegister.setDisable(true);
+    }
+
     @FXML
     private void handleRegisterButtonAction(ActionEvent event) {
 
+        CourseDto selectedCourse = CourseListView.getSelectionModel().getSelectedItem();
+        if (selectedCourse == null) {
+            lblMessage.setText("Please select a course to register");
+            return;
+        }
+        try {
+            int studentId = 1;
+            ArrayList<String> completedCourses = new ArrayList<>();
+
+            // call ther service method to register the course
+            String registrationResult = courseRegistrationService.registerForCourse(selectedCourse, studentId,
+                    completedCourses);
+            lblMessage.setText(registrationResult);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            lblMessage.setText("Error occured while registering for the course");
+        }
+
+    }
+
+    @FXML
+    void listViewMouseClick(MouseEvent event) {
+
+        CourseDto selectedCourse = CourseListView.getSelectionModel().getSelectedItem();
+
+        if (selectedCourse != null) {
+            lblMessage.setText("Selected Course: " + selectedCourse.getCourseTitle());
+            btnRegister.setDisable(false);
+        } else {
+            btnRegister.setDisable(true);
+        }
     }
 
     @FXML
     private void handleSearchButtonAction(ActionEvent event) {
-        String query = txtCourseTitle.getText();
-        if (query == null || query.trim().isEmpty()) {
+
+        String query = txtCourseTitle.getText().trim();
+        if (query.isEmpty()) {
             lblMessage.setText("Please enter a course title to search");
             return;
         }
         try {
             ArrayList<CourseDto> courses = courseRegistrationService.searchCourses(query);
             CourseListView.getItems().clear();
-            if(courses.isEmpty()){
+            if (courses.isEmpty()) {
                 lblMessage.setText("No courses found");
-            }else{
+            } else {
                 CourseListView.getItems().addAll(courses);
                 lblMessage.setText(courses.size() + " courses found");
             }
