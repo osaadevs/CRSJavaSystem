@@ -18,7 +18,10 @@ public class DBConnection {
         return (dbConnection == null) ? (dbConnection = new DBConnection()) : (dbConnection);
     }
 
-    public Connection getConnection() {
+    public Connection getConnection() throws SQLException {
+        if (connection.isClosed()) {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/crs", "root", "mysql");
+        }
         return connection;
     }
 }
