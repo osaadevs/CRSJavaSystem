@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -21,7 +22,7 @@ public class CourseManagementController {
     private TextField txtCourseCode, txtCourseTitle, txtCreditHours, txtDepartment, txtMaxEnroll, txtFacId;
 
     @FXML
-    private Button btnAddCourse, btnUpdateCourse, btnDeleteCourse, btnBack;
+    private Button btnAddCourse, btnUpdateCourse, btnDeleteCourse, btnBackButton;
 
     @FXML
     private TableView<CourseDto> tblCourses;
@@ -50,6 +51,13 @@ public class CourseManagementController {
         colFacId.setCellValueFactory(cellData -> cellData.getValue().facIdProperty().asObject());
 
         loadCourseData();
+
+        // Load course data when a row is selected
+        tblCourses.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                populateFields(newValue);  // ✅ Call method to populate text fields
+            }
+        });
     }
 
     private void loadCourseData() {
@@ -57,6 +65,9 @@ public class CourseManagementController {
             List<CourseDto> courses = courseDAO.getAllCourses();
             courseList = FXCollections.observableArrayList(courses);
             tblCourses.setItems(courseList);
+            tblCourses.refresh(); 
+            System.out.println("Table updated with " + courses.size() + " courses.");
+
         } catch (SQLException | ClassNotFoundException e) {
             showAlert("Error", "Failed to load course data", Alert.AlertType.ERROR);
         }
@@ -71,11 +82,12 @@ public class CourseManagementController {
                     txtCourseTitle.getText(),
                     Integer.parseInt(txtCreditHours.getText()),
                     txtDepartment.getText(),
-                    Integer.parseInt(txtMaxEnrollment.getText()),
+                    Integer.parseInt(txtMaxEnroll.getText()),
                     Integer.parseInt(txtFacId.getText())
             );
             courseDAO.addCourse(newCourse.getCourseTitle(), newCourse.getCourseCode(), newCourse.getCreditHours(), newCourse.getDepartment(), newCourse.getMaxEnrollment(), newCourse.getFacId());
             loadCourseData();
+            tblCourses.refresh();
             showAlert("Success", "Course added successfully", Alert.AlertType.INFORMATION);
         } catch (Exception e) {
             showAlert("Error", "Failed to add course", Alert.AlertType.ERROR);
@@ -91,7 +103,7 @@ public class CourseManagementController {
                 selectedCourse.setCourseTitle(txtCourseTitle.getText());
                 selectedCourse.setCreditHours(Integer.parseInt(txtCreditHours.getText()));
                 selectedCourse.setDepartment(txtDepartment.getText());
-                selectedCourse.setMaxEnrollment(Integer.parseInt(txtMaxEnrollment.getText()));
+                selectedCourse.setMaxEnrollment(Integer.parseInt(txtMaxEnroll.getText()));
                 selectedCourse.setFacId(Integer.parseInt(txtFacId.getText()));
 
                 courseDAO.updateCourse(selectedCourse.getCourseId(), selectedCourse.getCourseTitle(), selectedCourse.getCourseCode(), selectedCourse.getCreditHours(), selectedCourse.getDepartment(), selectedCourse.getMaxEnrollment(), selectedCourse.getFacId());
@@ -118,12 +130,12 @@ public class CourseManagementController {
     }
 
     @FXML
-    private void handleBack(ActionEvent event) {
+    private void handleBackButton(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/admin/admin_dashboard.fxml"));
-            AnchorPane root = loader.load();
+            Parent root = loader.load();
             Scene scene = new Scene(root);
-            Stage stage = (Stage) btnBack.getScene().getWindow();
+            Stage stage = (Stage) btnBackButton.getScene().getWindow();
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
@@ -137,5 +149,14 @@ public class CourseManagementController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void populateFields(CourseDto course) {
+        txtCourseCode.setText(course.getCourseCode());
+        txtCourseTitle.setText(course.getCourseTitle());
+        txtCreditHours.setText(String.valueOf(course.getCreditHours()));
+        txtDepartment.setText(course.getDepartment());
+        txtMaxEnroll.setText(String.valueOf(course.getMaxEnrollment()));
+        txtFacId.setText(String.valueOf(course.getFacId()));
     }
 }
