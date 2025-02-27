@@ -11,6 +11,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import service.CourseRegistrationService;
+import util.SessionManager;
 
 public class CourseController {
 
@@ -59,19 +60,19 @@ public class CourseController {
             return;
         }
         try {
-            int studentId = 1;
+           
+            int studentId = SessionManager.getStudentId(); 
             ArrayList<String> completedCourses = new ArrayList<>();
 
-            // call ther service method to register the course
+            
             String registrationResult = courseRegistrationService.registerForCourse(selectedCourse, studentId,
                     completedCourses);
             lblMessage.setText(registrationResult);
 
         } catch (Exception e) {
             e.printStackTrace();
-            lblMessage.setText("Error occured while registering for the course");
+            lblMessage.setText("Error occurred while registering for the course");
         }
-
     }
 
     @FXML

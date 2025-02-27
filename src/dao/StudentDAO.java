@@ -79,6 +79,21 @@ public class StudentDAO {
         return students;
     }
 
+    public int getStudentId(int userId) {
+        String query = "SELECT student_id FROM Students WHERE user_id = ?";
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, userId);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("student_id");
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     // Get student by ID
     public StudentDto getStudentById(int studentId) throws SQLException {
         String query = "SELECT s.student_id, u.user_id, u.first_name, u.last_name, u.email, u.username, " +

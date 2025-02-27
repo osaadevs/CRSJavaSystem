@@ -28,24 +28,38 @@ public class CourseRegistrationService {
         return courseDAO.searchCourses(title);
     }
 
-    public String registerForCourse (CourseDto course , int studentId, ArrayList<String> completedCourses){
-        try{
-
+    public String registerForCourse(CourseDto course, int studentId, ArrayList<String> completedCourses) {
+        try {
+            
+            boolean alreadyEnrolled = enrollmentDAO.isStudentEnrolled(studentId, course.getCourseId());
+            if (alreadyEnrolled) {
+                return "You are already enrolled in this course.";
+            }
+    
+            
+            boolean isFull = enrollmentDAO.isCourseFull(course.getCourseId());
+            if (isFull) {
+                return "Course is already full. Registration failed.";
+            }
+    
+            
             boolean hasPrerequisites = prerequisiteDAO.completedPrerequisites(studentId, course.getCourseId());
             if (!hasPrerequisites) {
                 return "You need to complete prerequisites before registering for this course.";
             }
-            boolean success = enrollmentDAO.registerStudent(studentId,course.getCourseId());
-            if(success){
+    
+            
+            boolean success = enrollmentDAO.registerStudent(studentId, course.getCourseId());
+            if (success) {
                 return "Successfully registered for " + course.getCourseTitle();
-            }else{
+            } else {
                 return "Failed to register for " + course.getCourseTitle();
             }
-        
-        }catch (ClassNotFoundException | SQLException e){
+    
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-            return "Error occured during Registration";
-
+            return "Error occurred during Registration";
         }
     }
+    
 }
