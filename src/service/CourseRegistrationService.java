@@ -31,11 +31,11 @@ public class CourseRegistrationService {
     public String registerForCourse (CourseDto course , int studentId, ArrayList<String> completedCourses){
         try{
 
-            boolean hasPrerequisites = prerequisiteDAO.completedPrerequisites(studentId, course.getcourseId());
+            boolean hasPrerequisites = prerequisiteDAO.completedPrerequisites(studentId, course.getCourseId());
             if (!hasPrerequisites) {
                 return "You need to complete prerequisites before registering for this course.";
             }
-            boolean success = enrollmentDAO.registerStudent(studentId,course.getcourseId());
+            boolean success = enrollmentDAO.registerStudent(studentId,course.getCourseId());
             if(success){
                 return "Successfully registered for " + course.getCourseTitle();
             }else{

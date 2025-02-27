@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
@@ -55,7 +54,7 @@ public class CourseManagementController {
         // Load course data when a row is selected
         tblCourses.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                populateFields(newValue);  // ✅ Call method to populate text fields
+                populateFields(newValue);  
             }
         });
     }
