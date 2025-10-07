@@ -79,13 +79,8 @@ The system follows a **Layered Architecture**:
    java -cp bin Main
    ```
 
-## 📜 Submission Requirements
-- ✅ **Complete Source Code** (Version-controlled on GitHub)
-- ✅ **Database File** (MySQL dump with sample data)
-- ✅ **Documentation** (README with setup instructions, system requirements, and user guide)
-
 ## 👥 Contributors
-- **Your Name** - Developer
+- **Osanda Senevirathna** - Developer
 
 📌 **Note:** This project is part of the CMJD - Comprehensive Master Java Developer coursework.
 
